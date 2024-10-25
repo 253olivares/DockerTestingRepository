@@ -40,3 +40,24 @@ ENV API_KEY=hi_mom
 
 # lets us set a port we want to use to expose our container
 EXPOSE 8080
+
+# Our final instruction will be our cmd instruction
+# This will be what ever executable you used to start your application
+CMD [ "python3", "-m", "http.server", "8080" ]
+
+# an alternative instruction taht you can use on top is a entrypoint it does the same thing but is used in conjunction of cmd
+# this just makes it so whatever you put in cmd are your arguments 
+# ENTRYPOINT ["python3", "-m", "http.server"]
+# CMD ["8080"]
+
+# Some instruction we can add are labels, vollumes, and health checks
+
+# Labels just lets us add metadata
+LABEL maintainer="Jeff"
+LABEL version="1.0"
+LABEL description="test container"
+
+# Healthchecks are repeat scripts that will run occasionally 
+# we can list a ccmd we want to run within the health check that will continue to monitor our server
+
+# Volume lets us mount a drive to the container to have persistent data as anything within the container will be wiped as soon as it stops
