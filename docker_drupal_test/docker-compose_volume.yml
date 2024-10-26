@@ -1,0 +1,35 @@
+version: '3.1'
+
+name: drupal_volume_test
+
+services:
+  drupal_webapp:
+    container_name: drupal_webapp
+    image: drupal
+    ports:
+      - 8080:80
+    volumes:
+      - drupal_data:/var/www/html/modules
+      - drupal_data:/var/www/html/profiles
+      - drupal_data:/var/www/html/themes
+      - drupal_data:/var/www/html/sites
+    restart: always
+  
+  postgres_server:
+    container_name: postgres_server
+    image: postgres
+    environment:
+      - POSTGRES_DB=drupal
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
+    restart: always
+
+# we can modify our network we create 
+networks:
+  default:
+    name: drupal_testing
+
+# create a volume where we want to hold persistant data
+volumes:
+  drupal_data:
+    external: true

@@ -1,0 +1,14 @@
+- Create a dummy container and copy drupal source files
+docker create --name drupal_dummy drupal
+docker cp drupal_dummy:/var/www/html/sites ./storage
+docker rm -f drupal_dummy
+
+- Create a dummy container and copy the source files to a volume
+docker run --rm -v drupal_data:/temporary/sites drupal cp -aRT /var/www/html/sites /temporary/sites 
+
+- Launch specific docker compose
+
+docker compose -f <file name> up
+
+- Remove all items for host items method
+rm -r ./storage/sites/*
