@@ -1,0 +1,37 @@
+version: '3.1'
+
+name: drupal_host_test
+
+services:
+  drupal_webapp:
+    image: drupal
+    container_name: drupal_site
+    ports:
+      - 8080:80
+    volumes:
+      - ./storage/modules:/var/www/html/modules
+      - ./storage/profiles:/var/www/html/profiles
+      - ./storage/themes:/var/www/html/themes 
+      # this takes advantage of the feature in Docker that a new anonymous
+      # volume (which is what we're creating here) will be initialized with the
+      # existing content of the image at the same location
+      - ./storage/sites:/var/www/html/sites
+    restart: always
+    depends_on:
+      - postgres_server
+  
+  postgres_server:
+    image: postgres
+    container_name: drupal_databse
+    environment:
+      - POSTGRES_DB=drupal
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=passs
+    volumes:
+      - ./storage/database-data:/var/lib/postgresql/data
+    restart: always
+
+# we can modify our network we create 
+networks:
+  default:
+    name: drupal_testing
