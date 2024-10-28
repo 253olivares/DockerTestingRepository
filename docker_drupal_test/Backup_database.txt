@@ -1,33 +1,3 @@
-To backup a Docker volume using tar, you can follow these steps:
-1. Create a temporary container:
-Code
+https://medium.com/@fieryphoenixtech/backing-up-docker-volumes-c06f8aa0e24a
 
-docker run --rm -v your_volume_name:/data -v $(pwd):/backup busybox
-Replace your_volume_name with the name of the volume you want to backup.
-This command creates a temporary container using the busybox image, mounts your volume at /data, and mounts your current working directory on the host at /backup.
-2. Create the tar archive:
-Code
-
-docker exec -it <container_id> tar -cvf /backup/volume_backup.tar /data
-Replace <container_id> with the ID of the container created in the previous step.
-This command creates a tar archive named volume_backup.tar in your current working directory on the host, containing the contents of the volume.
-To restore the volume from the backup:
-1. Create a new volume (if needed):
-Code
-
-docker volume create new_volume_name
-Replace new_volume_name with the name you want to give to the new volume.
-2. Create a temporary container:
-Code
-
-docker run --rm -v new_volume_name:/data -v $(pwd):/backup busybox
-This command creates a temporary container, mounting the new volume at /data and your current working directory on the host at /backup.
-3. Extract the tar archive:
-Code
-
-docker exec -it <container_id> tar -xvf /backup/volume_backup.tar -C /data
-This command extracts the contents of the volume_backup.tar into the new volume.
-Important considerations:
-Compression: You can use the -z flag with tar to create a compressed archive.
-Automation: You can automate this backup process using shell scripts or tools like cron.
-Alternative methods: You can also use the Docker Backup and Restore extension or tools like duplicity, restic, or borg for more advanced backup and restore functionality.
+Backup instructions

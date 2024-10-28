@@ -28,8 +28,12 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=passs
     volumes:
-      - ./storage/database-data:/var/lib/postgresql/data
+      - drupal_database:/var/lib/postgresql/data
     restart: always
+  
+volumes:
+  drupal_database:
+    name: drupal_database
 
 # we can modify our network we create 
 networks:
