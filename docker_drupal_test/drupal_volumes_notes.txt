@@ -12,3 +12,21 @@ docker compose -f <file name> up
 
 - Remove all items for host items method
 rm -r ./storage/sites/*
+
+Backup instructions
+
+https://medium.com/@fieryphoenixtech/backing-up-docker-volumes-c06f8aa0e24a
+
+linux: 
+archive data:
+docker run --rm -v drupal_database:/volume -v $(pwd):/backup alpine tar cvf /backup/backup.tar /volume
+
+unload data:
+docker run --rm -v drupal_database:/volume -v $(pwd):/backup alpine sh -c "cd /volume && tar xvf /backup/backup.tar --strip 1"
+
+windows:
+archive data:
+docker run --rm -v drupal_database:/volume -v .:/backup alpine tar cvf /backup/backup.tar /volume
+
+unload data:
+docker run --rm -v drupal_database:/volume -v .:/backup alpine sh -c "cd /volume && tar xvf /backup/backup.tar --strip 1"
