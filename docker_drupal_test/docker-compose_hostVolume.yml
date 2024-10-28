@@ -5,6 +5,7 @@ name: drupal_host_test
 services:
   drupal_webapp:
     image: drupal
+    container_name: drupal_site
     ports:
       - 8080:80
     volumes:
@@ -16,13 +17,18 @@ services:
       # existing content of the image at the same location
       - .\storage\sites:/var/www/html/sites
     restart: always
+    depends_on:
+      - postgres_server
   
   postgres_server:
     image: postgres
+    container_name: drupal_databse
     environment:
       - POSTGRES_DB=drupal
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=pass
+    volumes:
+      - ./storage/database:/var/lib/postgressql/data/pgdata
     restart: always
 
 # we can modify our network we create 
